@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11111f"><title>گردونه شانس — یه روز به‌یادماندنی</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="topbar"><a class="brand" href="./" aria-label="صفحه اصلی گردونه شانس"><span class="brand-icon">✳</span><span>lucky<span>draw</span><small>گردونه قرعه‌کشی آنلاین</small></span></a><div class="top-actions"><span class="made-for"><span class="green-dot"></span> برای لحظه‌های خوب</span><button id="sound-toggle" class="icon-button" aria-label="قطع صدا" title="قطع صدا">♫</button></div></header>
+  <main>
+    <section class="intro"><div class="eyebrow"><span>✦</span> یه ذره شانس <span>✦</span></div><h1>هر چرخش، یک<br><em>شانس تازه.</em></h1><p>اسم‌ها رو اضافه کن، گردونه رو بچرخون و برنده رو پیدا کن.</p></section>
+    <div class="workspace">
+      <section class="card participants-card" aria-labelledby="participants-title">
+        <div class="card-heading"><div><div class="section-kicker">فهرست شرکت‌کنندگان</div><h2 id="participants-title">شرکت‌کنندگان <span id="count" class="count">0</span></h2></div><span class="heading-icon">♧</span></div>
+        <p class="card-description">چه کسانی در قرعه‌کشی هستند؟ اسم‌ها را اضافه کنید.</p>
+        <form id="add-form" class="add-row"><label class="sr-only" for="name-input">نام شرکت‌کننده</label><input id="name-input" autocomplete="off" placeholder="یک نام وارد کنید" maxlength="200"><button class="add-button" type="submit" aria-label="افزودن شرکت‌کننده">+</button></form>
+        <button id="bulk-toggle" class="bulk-toggle" type="button"><span>▤</span> افزودن چند نام هم‌زمان <span class="chevron">⌄</span></button>
+        <div id="bulk-panel" class="bulk-panel" hidden><label for="bulk-input">هر نام را در یک خط وارد کنید.</label><textarea id="bulk-input" rows="4" placeholder="هر نام در یک خط"></textarea><button id="bulk-add" class="secondary-button" type="button">افزودن نام‌ها</button></div>
+        <div class="list-heading"><span>نام‌های ثبت‌شده</span><button id="clear" type="button">پاک کردن همه</button></div>
+        <ul id="participant-list" class="participant-list" aria-label="شرکت‌کنندگان"></ul><div id="empty-list" class="empty-list" hidden>هنوز کسی اضافه نشده. برای شروع یک نام وارد کنید.</div>
+        <div class="list-footer"><span><i></i> آماده برای قرعه‌کشی</span><span id="footer-count">۰ شرکت‌کننده</span></div>
+      </section>
+      <section class="wheel-area" aria-label="گردونه شانس"><div class="wheel-label"><span>✧</span> لحظه شانس شما <span>✧</span></div><div class="wheel-wrap"><div class="wheel-halo"></div><div class="wheel-rim"><canvas id="wheel" width="1000" height="1000" aria-label="گردونه شرکت‌کنندگان"></canvas></div><div class="pointer" aria-hidden="true"></div><button id="spin" class="spin-button" type="button"><span>بچرخون</span><small>برای برنده شدن</small></button></div><p class="wheel-hint"><span>✦</span> با یک چرخش، روز کسی را بساز <span>✦</span></p><p id="message" class="message" role="status" aria-live="polite"></p></section>
+      <aside class="card history-card"><div class="card-heading"><div><div class="section-kicker">تالار برندگان</div><h2>برندگان اخیر</h2></div><span class="history-icon">♕</span></div><p class="card-description">جشنی کوچک برای خوش‌شانس‌ها.</p><div id="history-list" class="history-list"></div><div id="history-empty" class="history-empty"><div class="trophy">♕</div><strong>هنوز برنده‌ای نداریم</strong><p>اولین برنده خوش‌شانس<br>فقط یک چرخش با شما فاصله دارد.</p></div><div class="history-bottom"><span>✧</span> بگذار لحظه‌های خوب ادامه پیدا کنند <span>✧</span></div></aside>
+    </div>
+    <div class="under-wheel"><span>✳</span> FAIR FUN, IN EVERY بچرخون <span>✳</span></div>
+  </main>
+  <footer><span>© ۲۰۲۶ گردونه شانس</span><span>برای لحظه‌هایی که به‌یاد می‌مانند <b>✦</b></span><button id="reset" type="button">↻ &nbsp; بازنشانی گردونه</button></footer>
+  <div id="winner-modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="winner-title"><canvas id="confetti" aria-hidden="true"></canvas><div class="modal-card"><button id="close-modal" class="modal-close" aria-label="بستن پیام برنده">×</button><div class="modal-sparkle">✦</div><div class="section-kicker">یک برنده داریم</div><h2 id="winner-title">و برنده این قرعه‌کشی...</h2><div id="winner-name" class="winner-name" dir="auto"></div><p>به برنده خوش‌شانس تبریک می‌گوییم!</p><button id="celebrate-close" class="celebrate-button">چه عالی! ✨</button></div></div>
+  <script type="module" src="assets/js/app.js"></script>
+</body></html>
