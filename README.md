@@ -1,10 +1,10 @@
 # Lucky Draw
 
-A colorful, browser-only random name picker. Add names one at a time or paste one per line, then spin. Edit entries with the pencil and remove them with ×. A middle dot in the list represents a boundary space; the edit field retains the original text. Each duplicate is a separate entry. Names and the last ten winners are stored locally in your browser when storage is available. Reset wheel returns the wheel to its initial orientation; clear all removes participants.
+A colorful, browser-only random name picker. Add names one at a time or paste one per line, then spin. Edit entries with the pencil and remove them with ×. Each duplicate is a separate entry. Names and the last ten winners are stored locally in your browser when storage is available. Reset wheel returns the wheel to its initial orientation; clear all removes participants.
 
-## Selection and privacy
+## Privacy
 
-Selection uses the original, unmodified strings. Entries starting with a regular space are excluded; among the remaining entries, those ending in a regular space take priority. Otherwise all eligible entries are in the draw. A name with both is excluded. The list marks excluded and priority entries. Empty lines are ignored during bulk import; all other characters, including spaces and Unicode, are preserved. The selection uses `crypto.getRandomValues` with rejection sampling when available, falling back to `Math.random` in environments without Web Crypto. No names are sent to a server.
+Names and winners stay in your browser; no names are sent to a server. Empty lines are ignored during bulk import, and other characters are preserved. Sound is synthesized locally and can be muted.
 
 ## Run locally
 
