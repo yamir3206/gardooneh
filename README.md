@@ -23,3 +23,7 @@ Run the automated selection and wheel geometry tests with `npm test` (requires N
 ## Architecture
 
 `selection.js` owns eligibility and random selection; `participants.js` handles space-preserving input; `wheel.js` draws the canvas and computes the landing angle; `history.js` handles local history; and `app.js` coordinates the interface and animation. The fixed pointer and the selected segment share the same angular coordinate system.
+
+## Install on a phone
+
+Once the HTTPS GitHub Pages site has loaded, Android users can tap **نصب برنامه** when their browser offers installation (or use the browser's install/add-to-home-screen menu). On iPhone, open the site in Safari, tap Share, then **Add to Home Screen**. The app caches its core files for offline use after the first visit; names and history remain on that device.

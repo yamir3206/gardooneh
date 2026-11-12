@@ -35,9 +35,9 @@ $('reset').onclick = () => { rotation = 0; $('message').textContent = ''; drawWh
 $('sound-toggle').onclick = () => { muted = !muted; $('sound-toggle').textContent = muted ? '♪̸' : '♫'; $('sound-toggle').setAttribute('aria-label', muted ? 'روشن کردن صدا' : 'قطع صدا'); $('sound-toggle').title = muted ? 'روشن کردن صدا' : 'قطع صدا'; };
 $('spin').onclick = () => {
   if (spinning) return;
-  if (!names.length) { $('message').textContent = 'برای چرخاندن گردونه، حداقل یک شرکت‌کننده اضافه کنید.'; return; }
+  if (!names.length) { $('message').textContent = 'اول حداقل یک اسم به لیست اضافه کن.'; return; }
   const winner = selectWinner(names);
-  if (winner === null) { $('message').textContent = 'امکان انجام قرعه‌کشی وجود ندارد. لطفاً فهرست نام‌ها را بررسی کنید.'; return; }
+  if (winner === null) { $('message').textContent = 'قرعه‌کشی انجام نشد. لطفاً لیست اسم‌ها رو بررسی کن.'; return; }
   $('message').textContent = ''; spinning = true; render(); sound('spin');
   const start = rotation, end = landingRotation(winner, names.length, rotation, 6 + randomInt(3), .25 + randomInt(5000) / 10000); const duration = 4000 + randomInt(4001); let startTime;
   function animate(time) { if (startTime === undefined) startTime = time; const progress = Math.min((time - startTime) / duration, 1); const ease = 1 - Math.pow(1 - progress, 4); rotation = start + (end - start) * ease; drawWheel($('wheel'), names, rotation); if (progress < 1) requestAnimationFrame(animate); else { rotation = end; spinning = false; const name = names[winner]; history.unshift(name); history = history.slice(0, 10); saveHistory(history); render(); $('winner-name').textContent = name; $('winner-modal').hidden = false; $('close-modal').focus(); sound('win'); confetti(); } }
@@ -47,3 +47,23 @@ function closeModal() { $('winner-modal').hidden = true; $('spin').focus(); }
 $('close-modal').onclick = closeModal; $('celebrate-close').onclick = closeModal; $('winner-modal').onclick = e => { if (e.target === $('winner-modal')) closeModal(); }; document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('winner-modal').hidden) closeModal(); });
 function confetti() { const canvas = $('confetti'), ctx = canvas.getContext('2d'); canvas.width = innerWidth; canvas.height = innerHeight; const pieces = Array.from({length: 100}, () => ({x: Math.random()*canvas.width, y: -Math.random()*canvas.height, speed: 2+Math.random()*4, size: 4+Math.random()*7, color: ['#c1a0ff','#f49cac','#ffcf80','#91d7bc'][randomInt(4)], angle: Math.random()*6})); let frames = 0; function frame() { if ($('winner-modal').hidden || frames++ > 240) { ctx.clearRect(0,0,canvas.width,canvas.height); return; } ctx.clearRect(0,0,canvas.width,canvas.height); pieces.forEach(p => { p.y += p.speed; p.x += Math.sin(p.y/40); p.angle += .04; ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.angle); ctx.fillStyle=p.color; ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*.55); ctx.restore(); }); requestAnimationFrame(frame); } requestAnimationFrame(frame); }
 render();
+
+// Installation is optional; Safari on iOS uses the Share menu instead.
+let installPrompt;
+const installButton = $('install-button');
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+if (isIOS && !isStandalone) installButton.hidden = false;
+window.addEventListener('beforeinstallprompt', event => {
+  event.preventDefault(); installPrompt = event; installButton.hidden = false;
+});
+installButton.addEventListener('click', async () => {
+  if (installPrompt) {
+    const prompt = installPrompt; installPrompt = null; installButton.hidden = true;
+    await prompt.prompt();
+  } else if (isIOS) { $('install-help').hidden = !$('install-help').hidden; }
+});
+window.addEventListener('appinstalled', () => { installPrompt = null; installButton.hidden = true; $('install-help').hidden = true; });
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(error => console.warn('Service worker registration failed:', error)));
+}
